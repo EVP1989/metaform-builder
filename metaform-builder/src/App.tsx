@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import FormItems from './components/FormItems';
 import HeaderNav from './components/generic/HeaderNav';
 
 //Material-UI components
@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <HeaderNav />
-
+      <FormItems />
       <Button variant="contained" color="primary">
         Tulosta JSON
       </Button>
