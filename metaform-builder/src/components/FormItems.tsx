@@ -30,7 +30,9 @@ const FormItems : React.FC = () => {
     const draggingItem = useRef<number | null>(null);
     const dragOverItem = useRef<number | null>(null);
 
-    //TODO: Generate list from static list of form components
+    //TODO: Generate list from static list of desired form items
+    //TODO: Make mutable list of that can add/remove form items
+    //TODO: Make method that writes list to json file
     const [formBlockList, setFormBlockList] = useState([
     'Tekstikenttä1',
     'Tekstikenttä2',
