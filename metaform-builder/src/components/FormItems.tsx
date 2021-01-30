@@ -1,8 +1,7 @@
-import { Box, createStyles, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, Input, List, ListItem, ListItemText, makeStyles, TextField, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import SubjectIcon from '@material-ui/icons/Subject';
 import React, { useState, useRef } from 'react';
+import Metaform from '../model/metaformExampleJSON';
 import '../styles/FormItems.css';
 
 //DnD items based on github repo: https://github.com/Gaurav2048/React-DnD-Adv
@@ -24,7 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const FormItems : React.FC = () => {
+const metaformExampleJson = Metaform;
+
+const FormItemsList : React.FC = () => {
 
     const classes = useStyles();
     const draggingItem = useRef<number | null>(null);
@@ -33,11 +34,7 @@ const FormItems : React.FC = () => {
     //TODO: Generate list from static list of desired form items
     //TODO: Make mutable list of that can add/remove form items
     //TODO: Make method that writes list to json file
-    const [formBlockList, setFormBlockList] = useState([
-    'Tekstikenttä1',
-    'Tekstikenttä2',
-    'Tekstikenttä3'
-    ]);
+    const [formBlockList, setFormBlockList] = useState<any>(metaformExampleJson.sections[0].fields);
 
     const handleDragStart = (e : any, position :number) => {
         draggingItem.current = position;
@@ -55,14 +52,33 @@ const FormItems : React.FC = () => {
         draggingItem.current = dragOverItem.current;
         dragOverItem.current = null;
         setFormBlockList(newFormBlockList);
-        console.log(newFormBlockList);
     };
 
+    /**
+     * Updates form data (TESTING)
+     * 
+     * @param e 
+     * @param index 
+     */
+    const handleInputChange = (e : any, index : number) => {
+
+        let placeholder  = e.target.value;
+ 
+        const newFormBlockList = [...formBlockList];
+
+        newFormBlockList[index].placeholder = placeholder;
+
+        setFormBlockList(newFormBlockList);
+
+    }
+
+    //When rendering, use methods to return needed elements
     return (
     <>
-    <Grid>
+    <h1>{ metaformExampleJson.title }</h1>
+    <Grid item md={12}>
         <List className={classes.root}>
-            {formBlockList && formBlockList.map((item, index) => (
+            {formBlockList && formBlockList.map((item : any, index : number) => (
             <ListItem
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragEnter={(e) => handleDragEnter(e, index)}
@@ -70,21 +86,16 @@ const FormItems : React.FC = () => {
                 key={index} draggable
                 className={classes.components}
                 >
-                <Box border={1} display="flex" pr={2}>
-                    <ListItemIcon className={classes.icon}>
-                        <SubjectIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                        <Typography variant="h6">
-                            {item}
-                        </Typography>
-                    </ListItemText>
-                </Box>
+                <ListItemText>
+                    <TextField value={item.placeholder} onChange={(e) => handleInputChange(e, index) }/>
+                </ListItemText>
             </ListItem>
             ))}
         </List> 
     </Grid>
     </>
     );
+
+
 };
-export default FormItems;
+export default FormItemsList;
