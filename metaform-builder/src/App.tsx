@@ -1,7 +1,9 @@
-import React from 'react';
-import FormItemsList from './components/FormItems';
-import StaticItems from './components/StaticItems';
+import React, { useState } from 'react';
+import FormComponents from './components/FormComponents';
+import ListOfComponents from './components/ListOfComponents';
 import HeaderNav from './components/generic/HeaderNav';
+import addableComponents from './model/formComponentDustyWarehouse';
+import MetaformExampleJson from './model/metaformExampleJSON';
 
 //Material-UI components
 import Button from '@material-ui/core/Button';
@@ -18,16 +20,24 @@ const theme = responsiveFontSizes(metaFormBuilder);
 
 function App() {
 
+  let test :string[] = [];
+  
+  addableComponents.forEach(element => {
+    test.push(element.textfield)
+  });
+
+  const [formBlockList, setFormBlockList] = useState<any>(MetaformExampleJson.sections[0].fields);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
         <HeaderNav />
         <Grid container>
           <Grid item md={3}>
-            <StaticItems />
+            <ListOfComponents setFormBlockList={setFormBlockList} addableComponents={addableComponents} metaformExampleJson={formBlockList}/>
           </Grid>
           <Grid item md={9}>
-            <FormItemsList />
+            <FormComponents formBlockList={formBlockList} setFormBlockList={setFormBlockList} metaformExampleJson={MetaformExampleJson}/>
           </Grid>
         </Grid>
           
