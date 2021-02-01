@@ -1,9 +1,8 @@
 import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import '../styles/FormItems.css';
 
-//TODO: Generate list from static list of desired form items
 //TODO: Make mutable list of that can add/remove form items
 //TODO: Make method that writes list to json file
 
@@ -35,8 +34,6 @@ interface Props {
 const FormComponents : React.FC<any> = (props : Props) => {
 
   const formBlockList = props.formBlockList;
-
-  const metaformExample = props.metaformExampleJson;
 
   const classes = useStyles();
   const draggingItem = useRef<number | null>(null);
@@ -81,22 +78,21 @@ const FormComponents : React.FC<any> = (props : Props) => {
   return (
   <>
   <Grid item md={12}>
-  <h1>{ metaformExample.title }</h1>
-      <List className={classes.root}>
-          {formBlockList && formBlockList.map((item : any, index : number) => (
-          <ListItem
-              onDragStart={(e) => handleDragStart(e, index)}
-              onDragEnter={(e) => handleDragEnter(e, index)}
-              onDragOver={(e) => e.preventDefault()}
-              key={index} draggable
-              className={classes.components}
-              >
-              <ListItemText>
-                  <TextField label="Tekstikenttä" variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
-              </ListItemText>
-          </ListItem>
-          ))}
-      </List> 
+    <List className={classes.root}>
+        {formBlockList && formBlockList.map((item : any, index : number) => (
+        <ListItem
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragEnter={(e) => handleDragEnter(e, index)}
+            onDragOver={(e) => e.preventDefault()}
+            key={index} draggable
+            className={classes.components}
+            >
+            <ListItemText>
+                <TextField label="Tekstikenttä" variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
+            </ListItemText>
+        </ListItem>
+        ))}
+    </List> 
   </Grid>
   </>
   );

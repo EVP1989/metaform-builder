@@ -19,7 +19,7 @@ const MetaformJSON = {
             "required": null,
             "contexts": [],
             "flags": null,
-            "placeholder": "Maija Mehiläinen",
+            "placeholder": "Otsikko 1",
             "_class": null,
             "readonly": null,
             "help": null,

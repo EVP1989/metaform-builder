@@ -2,7 +2,7 @@ import { Box, createStyles, List, ListItem, ListItemIcon, ListItemText, makeStyl
 import Typography from '@material-ui/core/Typography';
 import SubjectIcon from '@material-ui/icons/Subject';
 import React from 'react';
-import addableComponents from '../model/formComponentDustyWarehouse';
+//import addableComponents from '../model/formComponentDustyWarehouse';
 
 //Styles
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,15 +35,15 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
   const formBlockList = props.metaformExampleJson;
 
   /**
-     * Add new form component to component list
-     * @param e 
+     * Add new form component to component list 
+     * @param component 
      * @param index 
      */
     const addFormComponentToList = (component : any, index : number) => {
-console.log(props.metaformExampleJson)
+
       const newFormBlockList =  [...formBlockList];
 
-      let newFormBlock = component.target.outerText;
+      let newFormBlock = props.addableComponents[index];
 
       newFormBlockList.push(newFormBlock);
       console.log(newFormBlockList)
@@ -54,10 +54,11 @@ console.log(props.metaformExampleJson)
   return (
   <>
     <List>
-      {addableComponents && addableComponents.map((component, index) => (
+      {props.addableComponents.map((component, index) => (
         <ListItem
           key={index} draggable
           className={classes.components}
+          
           onClick={(component) => addFormComponentToList(component, index)}
           >
           <Box border={1} display="flex" pr={2}>
@@ -66,7 +67,7 @@ console.log(props.metaformExampleJson)
             </ListItemIcon>
             <ListItemText >
                 <Typography variant="h6" >
-                    {component.textfield}
+                    {component.placeholder}
                 </Typography>
             </ListItemText>
           </Box>
@@ -75,5 +76,6 @@ console.log(props.metaformExampleJson)
     </List> 
   </>
   );
+
 };
 export default ListOfComponents;
