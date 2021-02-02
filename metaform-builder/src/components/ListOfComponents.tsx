@@ -1,8 +1,9 @@
-import { Box, createStyles, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
+import { Box, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import SubjectIcon from '@material-ui/icons/Subject';
-import React from 'react';
-//import addableComponents from '../model/formComponentDustyWarehouse';
+import React, { useState } from 'react';
+import addableComponents from '../model/formComponentDustyWarehouse';
+import FormComponents from './FormComponents';
 
 //Styles
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,17 +23,26 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  formBlockList : any,
-  addableComponents : any[],
-  metaformExampleJson? : any,
-  setFormBlockList : (newFormBlockList : any) => void
+  //formBlockList : any,
+  //metaformExampleJson? : any,
+  //setFormBlockList : (newFormBlockList : any) => void
 }
 
+/**
+ * Renders addable components
+ * @param props
+ */
 const ListOfComponents : React.FC<any> = (props : Props) => {
+
+  /**
+   * Initialize form
+   * TODO: check local storige for existing one
+   */
+  const [formBlockList, setFormBlockList] = useState<any[]>([]);
 
   const classes = useStyles();
 
-  const formBlockList = props.metaformExampleJson;
+  const addableComponentsList = addableComponents;
 
   /**
      * Add new form component to component list 
@@ -43,37 +53,46 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
 
       const newFormBlockList =  [...formBlockList];
 
-      let newFormBlock = props.addableComponents[index];
+      let newFormBlock = addableComponentsList[index];
 
       newFormBlockList.push(newFormBlock);
-      console.log(newFormBlockList)
-      props.setFormBlockList(newFormBlockList);
+
+      setFormBlockList(newFormBlockList);
     
     }
 
   return (
   <>
+  <Grid container>
+  <Grid item md={3}>
     <List>
-      {props.addableComponents.map((component, index) => (
+      <Typography variant="h5">
+        Komponentit
+      </Typography>
+      {addableComponentsList && addableComponentsList.map((component, index) => (
         <ListItem
           key={index} draggable
           className={classes.components}
-          
-          onClick={(component) => addFormComponentToList(component, index)}
+          onClick={(e) => addFormComponentToList(component, index)}
           >
-          <Box border={1} display="flex" pr={2}>
+          <Box border={1} display="flex" pr={3}>
             <ListItemIcon className={classes.icon}>
-                <SubjectIcon />
+              <SubjectIcon />
             </ListItemIcon>
             <ListItemText >
-                <Typography variant="h6" >
-                    {component.placeholder}
-                </Typography>
+              <Typography variant="h6" >
+                {component.placeholder}
+              </Typography>
             </ListItemText>
           </Box>
         </ListItem>
       ))}
     </List> 
+    </Grid>
+    <Grid item md={9}>
+      <FormComponents formBlockList={formBlockList} setFormBlockList={setFormBlockList}/>
+    </Grid>
+  </Grid>
   </>
   );
 

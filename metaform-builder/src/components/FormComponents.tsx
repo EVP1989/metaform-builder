@@ -1,5 +1,6 @@
-import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme } from '@material-ui/core';
+import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import { Delete, Home } from '@material-ui/icons';
 import React, { useRef } from 'react';
 import '../styles/FormItems.css';
 
@@ -26,16 +27,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  metaformExampleJson : any;
   setFormBlockList : (newFormBlockList : any[]) => void
-  formBlockList : any[]
+  formBlockList : any[],
 }
 
+/**
+ * Renders form according to given component list
+ * @param props 
+ */
 const FormComponents : React.FC<any> = (props : Props) => {
 
   const formBlockList = props.formBlockList;
 
   const classes = useStyles();
+
   const draggingItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
 
@@ -57,7 +62,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
   };
 
   /**
-   * Updates form data (TESTING)
+   * Updates form input data (TESTING)
    * 
    * @param input 
    * @param index 
@@ -74,22 +79,40 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
   }
 
-  //When rendering, use methods to return needed elements
+  /**
+   * Deletes form component from list
+   * @param index 
+   */
+  const deleteFormComponent = (index : number) : void => {
+
+    const newFormBlockList = [...formBlockList];
+
+    newFormBlockList.splice(index,1);
+
+    props.setFormBlockList(newFormBlockList);
+
+  }
+
+  //TODO: Use methods to return needed elements
   return (
   <>
   <Grid item md={12}>
+    <Typography variant="h2" >
+      Uusi Lomake
+    </Typography>
     <List className={classes.root}>
-        {formBlockList && formBlockList.map((item : any, index : number) => (
+        {props.formBlockList.map((item : any, index : number) => (
         <ListItem
-            onDragStart={(e) => handleDragStart(e, index)}
-            onDragEnter={(e) => handleDragEnter(e, index)}
-            onDragOver={(e) => e.preventDefault()}
-            key={index} draggable
-            className={classes.components}
-            >
-            <ListItemText>
-                <TextField label="Tekstikenttä" variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
-            </ListItemText>
+          onDragStart={(e) => handleDragStart(e, index)}
+          onDragEnter={(e) => handleDragEnter(e, index)}
+          onDragOver={(e) => e.preventDefault()}
+          key={index} draggable
+          className={classes.components}
+          >
+          <ListItemText>
+          <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
+            <TextField label={index} variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
+          </ListItemText>
         </ListItem>
         ))}
     </List> 
