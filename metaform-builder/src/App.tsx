@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FormComponents from './components/FormComponents';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ListOfComponents from './components/ListOfComponents';
 import HeaderNav from './components/generic/HeaderNav';
 
@@ -8,7 +8,8 @@ import { ThemeProvider } from "@material-ui/styles";
 
 //Styles
 import metaFormBuilder from "./styles/theme";
-import { Grid, responsiveFontSizes } from '@material-ui/core';
+import { responsiveFontSizes } from '@material-ui/core';
+import HeaderNavTest from './components/generic/HeaderNavTest';
 
 /**
  * Material UI's automated responsive font sizes
@@ -18,10 +19,12 @@ const theme = responsiveFontSizes(metaFormBuilder);
 function App() {
 
   return (
-    <ThemeProvider theme={theme}>
-      <HeaderNav /> 
-      <ListOfComponents/>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <HeaderNavTest /> 
+  
+      </ThemeProvider>
+    </Router>
   );
 }
 
