@@ -1,23 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import HeaderNav from './components/generic/HeaderNav';
-
-//Material-UI components
-import Button from '@material-ui/core/Button';
-
+import React, { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import HeaderNavTest from './components/generic/HeaderNavTest';
+//Material-UI
+import { ThemeProvider } from "@material-ui/styles";
 //Styles
-import './App.css';
+import metaFormBuilder from "./styles/theme";
+import { responsiveFontSizes } from '@material-ui/core';
+
+/**
+ * Material UI's automated responsive font sizes
+ */
+const theme = responsiveFontSizes(metaFormBuilder);
 
 function App() {
 
-  return (
-    <div>
-      <HeaderNav />
+  /**
+   * Initialize form
+   * TODO: check local storige for existing one
+   */
+  const [formBlockList, setFormBlockList] = useState<any[]>([]);
 
-      <Button variant="contained" color="primary">
-        Tulosta JSON
-      </Button>
-    </div>
+  return (
+    <Router>
+      <ThemeProvider theme={theme}>
+        <HeaderNavTest setFormBlockList={setFormBlockList} formBlockList={formBlockList}/> 
+      </ThemeProvider>
+    </Router>
   );
 }
 
