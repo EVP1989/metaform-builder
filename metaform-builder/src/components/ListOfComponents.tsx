@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  //formBlockList : any,
+  formBlockList : any,
   //metaformExampleJson? : any,
-  //setFormBlockList : (newFormBlockList : any) => void
+  setFormBlockList : (newFormBlockList : any) => void
 }
 
 /**
@@ -34,11 +34,7 @@ interface Props {
  */
 const ListOfComponents : React.FC<any> = (props : Props) => {
 
-  /**
-   * Initialize form
-   * TODO: check local storige for existing one
-   */
-  const [formBlockList, setFormBlockList] = useState<any[]>([]);
+  
 
   const classes = useStyles();
 
@@ -51,13 +47,13 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
      */
     const addFormComponentToList = (component : any, index : number) => {
 
-      const newFormBlockList =  [...formBlockList];
+      const newFormBlockList =  [...props.formBlockList];
 
       let newFormBlock = addableComponentsList[index];
 
       newFormBlockList.push(newFormBlock);
 
-      setFormBlockList(newFormBlockList);
+      props.setFormBlockList(newFormBlockList);
     
     }
 
@@ -90,7 +86,7 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
     </List> 
     </Grid>
     <Grid item md={9}>
-      <FormComponents formBlockList={formBlockList} setFormBlockList={setFormBlockList}/>
+      <FormComponents formBlockList={props.formBlockList} setFormBlockList={props.setFormBlockList}/>
     </Grid>
   </Grid>
   </>

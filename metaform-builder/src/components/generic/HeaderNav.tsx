@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps, Route, Switch, BrowserRouter} from 'react-router-dom';
 //Material-UI components
-import Link from '@material-ui/core/Link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -12,7 +11,8 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CodeIcon from '@material-ui/icons/Code';
 import Preview from '../Preview';
 import JsonPreview from '../JsonPreview';
-import ListOfComponents from '../ListOfComponents';
+
+//COMPONENT NOT IN USE!!
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

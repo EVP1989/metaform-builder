@@ -1,15 +1,21 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import JsonPreview from '../JsonPreview';
+import ListOfComponents from '../ListOfComponents';
+import Preview from '../Preview';
+//Material-UI 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import JsonPreview from '../JsonPreview';
+import { makeStyles, Theme } from '@material-ui/core';
+//Material-UI icons
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CodeIcon from '@material-ui/icons/Code';
-//import green from "@material-ui/core/colors/red";
-import ListOfComponents from '../ListOfComponents';
-import Preview from '../Preview';
+
+interface Props {
+    formBlockList : any,
+    setFormBlockList : (newFormBlockList : any) => void
+  }
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -56,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function HeaderNavTest() {
+export default function HeaderNavTest( props : Props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -79,13 +85,13 @@ export default function HeaderNavTest() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <ListOfComponents/>
+        <ListOfComponents setFormBlockList={props.setFormBlockList} formBlockList={props.formBlockList}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Preview/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <JsonPreview/>
+        <JsonPreview formBlockList={props.formBlockList}/>
       </TabPanel>
     </div>
   );

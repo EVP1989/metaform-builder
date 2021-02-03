@@ -1,6 +1,6 @@
 import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import { Delete, Home } from '@material-ui/icons';
+import { Delete } from '@material-ui/icons';
 import React, { useRef } from 'react';
 import '../styles/FormItems.css';
 
@@ -74,9 +74,9 @@ const FormComponents : React.FC<any> = (props : Props) => {
       const newFormBlockList = [...formBlockList];
 
       newFormBlockList[index].placeholder = placeholder;
-
+console.log(newFormBlockList)
       props.setFormBlockList(newFormBlockList);
-
+console.log()
   }
 
   /**
@@ -111,7 +111,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
           >
           <ListItemText>
           <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
-            <TextField label={index} variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
+            <TextField variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
           </ListItemText>
         </ListItem>
         ))}
