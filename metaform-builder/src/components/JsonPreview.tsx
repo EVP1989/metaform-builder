@@ -2,7 +2,6 @@ import { Box, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import React, { useState } from 'react';
 import MetaformTypes from '../types/metaForm';
-//import metaformExampleJson from '../model/metaformExampleJSON';
 
 interface Props {
     json : MetaformTypes
@@ -15,7 +14,7 @@ interface Props {
  */
 const Preview : React.FC<any> = (props : Props) => {
 
-    const [metaformJson, setMetaformJson] = useState<MetaformTypes>(props.formBlockList)
+    const [metaformJson] = useState<MetaformTypes>(props.formBlockList)
 
   return (
   <>

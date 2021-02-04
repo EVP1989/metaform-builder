@@ -4,9 +4,6 @@ import { Delete } from '@material-ui/icons';
 import React, { useRef } from 'react';
 import '../styles/FormItems.css';
 
-//TODO: Make mutable list of that can add/remove form items
-//TODO: Make method that writes list to json file
-
 //DnD items based on github repo: https://github.com/Gaurav2048/React-DnD-Adv
 
 //Styles
@@ -37,8 +34,6 @@ interface Props {
  */
 const FormComponents : React.FC<any> = (props : Props) => {
 
-  const formBlockList = props.formBlockList;
-
   const classes = useStyles();
 
   const draggingItem = useRef<number | null>(null);
@@ -50,7 +45,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
   const handleDragEnter = (e : any, position : number) => {
       dragOverItem.current = position;
-      const newFormBlockList = [...formBlockList];
+      const newFormBlockList = [...props.formBlockList];
       if(draggingItem.current != null) {
           const draggingItemContent = newFormBlockList[draggingItem.current];
           newFormBlockList.splice(draggingItem.current, 1);
@@ -69,14 +64,13 @@ const FormComponents : React.FC<any> = (props : Props) => {
    */
   const handleInputChange = (input : any, index : number) => {
 
-      let placeholder  = input.target.value;
+      let title  = input.target.value;
 
-      const newFormBlockList = [...formBlockList];
+      const newFormBlockList = Array.from(props.formBlockList);
 
-      newFormBlockList[index].placeholder = placeholder;
-console.log(newFormBlockList)
+      newFormBlockList[index].title = title;
+
       props.setFormBlockList(newFormBlockList);
-console.log()
   }
 
   /**
@@ -85,7 +79,7 @@ console.log()
    */
   const deleteFormComponent = (index : number) : void => {
 
-    const newFormBlockList = [...formBlockList];
+    const newFormBlockList = [...props.formBlockList];
 
     newFormBlockList.splice(index,1);
 
@@ -111,7 +105,7 @@ console.log()
           >
           <ListItemText>
           <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
-            <TextField variant="outlined" value={item.placeholder} onChange={(input) => handleInputChange(input, index) }/>
+            <TextField variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
           </ListItemText>
         </ListItem>
         ))}
