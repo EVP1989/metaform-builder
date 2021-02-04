@@ -1,33 +1,68 @@
 import React from 'react';
-import { Link as RouterLink, LinkProps as RouterLinkProps, Route, Switch, BrowserRouter} from 'react-router-dom';
-//Material-UI components
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import JsonPreview from '../JsonPreview';
+import ListOfComponents from '../ListOfComponents';
+import Preview from '../Preview';
+//Material-UI 
+import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { makeStyles, Theme } from '@material-ui/core';
 //Material-UI icons
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CodeIcon from '@material-ui/icons/Code';
-import Preview from '../Preview';
-import JsonPreview from '../JsonPreview';
 
-//COMPONENT NOT IN USE!!
+interface Props {
+    formBlockList : any,
+    setFormBlockList : (newFormBlockList : any) => void
+  }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-  }),
-);
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
 
-const LinkBehavior = React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((props, ref) => (
-  <RouterLink ref={ref} to="/" {...props} />
-));
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
 
-function HeaderNav() {
+  return (
+    <>
+      {value === index && (
+        <>
+          {children}
+        </>
+      )}
+    </>
+  );
+}
 
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+  icon? : any
+}
+
+function LinkTab(props: LinkTabProps) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+  },
+}));
+
+export default function HeaderNav( props : Props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -36,30 +71,28 @@ function HeaderNav() {
   };
 
   return (
-    <><BrowserRouter>
-      <Paper className={classes.root}>
-        
+    <div className={classes.root}>
+      <AppBar position="static" color="secondary">
         <Tabs
+          variant="fullWidth"
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
+          aria-label="nav tabs example"
         >
-          
-          <Tab icon={<FormatAlignJustifyIcon />} label="Lomake"/>
-          <Tab icon={<VisibilityIcon />} label="Esikatsele" />
-          <Tab icon={<CodeIcon />} label="JSON" />
+          <LinkTab icon={<FormatAlignJustifyIcon/>}  label="Lomake" />
+          <LinkTab icon={<VisibilityIcon />} label="Esikatselu"/>
+          <LinkTab icon={<CodeIcon />} label="JSON"  />
         </Tabs>
-      </Paper>
-
-      <Switch>
-        <Route exact path="/preview/" component={Preview}></Route>  
-        <Route exact path="/jsonpreview/" component={JsonPreview}></Route> 
-      </Switch>
-      </BrowserRouter>
-    </>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <ListOfComponents setFormBlockList={props.setFormBlockList} formBlockList={props.formBlockList}/>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Preview/>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <JsonPreview formBlockList={props.formBlockList}/>
+      </TabPanel>
+    </div>
   );
 }
-
-export default HeaderNav;

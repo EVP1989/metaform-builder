@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import HeaderNavTest from './components/generic/HeaderNavTest';
+import HeaderNav from './components/generic/HeaderNav';
 //Material-UI
 import { ThemeProvider } from "@material-ui/styles";
 //Styles
@@ -23,7 +23,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <HeaderNavTest setFormBlockList={setFormBlockList} formBlockList={formBlockList}/> 
+        <HeaderNav setFormBlockList={setFormBlockList} formBlockList={formBlockList}/> 
       </ThemeProvider>
     </Router>
   );
