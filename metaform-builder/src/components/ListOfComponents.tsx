@@ -39,10 +39,10 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
   const addableComponentsList = addableComponents;
 
   /**
-     * Add new form component to component list & update json
-     * @param component 
-     * @param index 
-     */
+   * Add new form component to component list & update json
+   * @param component 
+   * @param index 
+   */
     const addFormComponentToList = (component : any, index : number) => {
 
       const newFormJson = {...props.metaFormJson};
