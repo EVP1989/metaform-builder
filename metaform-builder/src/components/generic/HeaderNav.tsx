@@ -13,8 +13,8 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CodeIcon from '@material-ui/icons/Code';
 
 interface Props {
-    formBlockList : any,
-    setFormBlockList : (newFormBlockList : any) => void
+    metaFormJson : any,
+    setMetaFormJson : (newMetaFormJson: any) => void
   }
 
 interface TabPanelProps {
@@ -85,13 +85,13 @@ export default function HeaderNav( props : Props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <ListOfComponents setFormBlockList={props.setFormBlockList} formBlockList={props.formBlockList}/>
+        <ListOfComponents setMetaFormJson={props.setMetaFormJson} metaFormJson={props.metaFormJson}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Preview/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <JsonPreview formBlockList={props.formBlockList}/>
+        <JsonPreview metaFormJson={props.metaFormJson}/>
       </TabPanel>
     </div>
   );

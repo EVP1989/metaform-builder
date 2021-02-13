@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import HeaderNav from './components/generic/HeaderNav';
+import MetaformJSON from './model/metaformJSON';
 //Material-UI
 import { ThemeProvider } from "@material-ui/styles";
 //Styles
@@ -18,12 +19,12 @@ function App() {
    * Initialize form
    * TODO: check local storige for existing one
    */
-  const [formBlockList, setFormBlockList] = useState<any[]>([]);
+  const [metaFormJson, setMetaFormJson] = useState<any>(MetaformJSON);
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <HeaderNav setFormBlockList={setFormBlockList} formBlockList={formBlockList}/> 
+        <HeaderNav setMetaFormJson={setMetaFormJson} metaFormJson={metaFormJson}/> 
       </ThemeProvider>
     </Router>
   );

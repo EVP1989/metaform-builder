@@ -1,9 +1,10 @@
-import { Box, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import SubjectIcon from '@material-ui/icons/Subject';
 import React from 'react';
 import addableComponents from '../model/formComponentDustyWarehouse';
 import FormComponents from './FormComponents';
+//Material-UI
+import { Box, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import SubjectIcon from '@material-ui/icons/Subject';
 
 //Styles
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,8 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  formBlockList : any,
-  setFormBlockList : (newFormBlockList : any) => void
+  metaFormJson : any,
+  setMetaFormJson : (newMetaFormJson : any) => void
 }
 
 /**
@@ -38,19 +39,23 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
   const addableComponentsList = addableComponents;
 
   /**
-     * Add new form component to component list 
+     * Add new form component to component list & update json
      * @param component 
      * @param index 
      */
     const addFormComponentToList = (component : any, index : number) => {
 
-      const newFormBlockList =  [...props.formBlockList];
+      const newFormJson = {...props.metaFormJson};
+
+      const newFormBlockList =  [...props.metaFormJson.sections[0].fields];
 
       let newFormBlock = JSON.parse(JSON.stringify(addableComponentsList[index]));
 
       newFormBlockList.push(newFormBlock);
+
+      newFormJson.sections[0].fields = newFormBlockList;
       
-      props.setFormBlockList(newFormBlockList);
+      props.setMetaFormJson(newFormJson);
 
     }
 
@@ -62,7 +67,7 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
         <Typography variant="h5">
           Komponentit
         </Typography>
-        {addableComponentsList && addableComponentsList.map((component, index) => (
+        {addableComponentsList.map((component, index) => (
           <ListItem
             key={index} draggable
             className={classes.components}
@@ -83,7 +88,7 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
       </List> 
     </Grid>
     <Grid item md={9}>
-      <FormComponents formBlockList={props.formBlockList} setFormBlockList={props.setFormBlockList}/>
+      <FormComponents metaFormJson={props.metaFormJson} setMetaFormJson={props.setMetaFormJson}/>
     </Grid>
   </Grid>
   </>
