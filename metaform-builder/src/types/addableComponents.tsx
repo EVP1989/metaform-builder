@@ -5,13 +5,13 @@
 export interface AddableComponents {
         "visibleIf"?: null,
         "permissionContexts"?: null,
-        "name"?: string,
-        "type"?: string,
+        "name"?: string | null,
+        "type"?: string | null,
         "title"?: string | null,
         "required"?: null,
         "contexts"?: any[],
-        "flags"?: null,
-        "placeholder"?: string,
+        "flags"?: {} | null,
+        "placeholder"?: string | null,
         "_class"?: null,
         "readonly"?: null,
         "help"?: null,
@@ -21,7 +21,14 @@ export interface AddableComponents {
         "step"?: null,
         "checked"?: null,
         "printable"?: null,
-        "options"?: [],
+        "options"?: [
+                {
+                "name"?: string | null,
+                "text"?: string | null,
+                "checked"?: boolean | null,
+                "selected"?: boolean | null
+                }
+        ] | null | any,
         "sourceUrl"?: null,
         "uploadUrl"?: null,
         "singleFile"?: null,
