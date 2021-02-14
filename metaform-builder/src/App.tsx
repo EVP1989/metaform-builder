@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import HeaderNav from './components/generic/HeaderNav';
+import MetaformJSON from './model/metaformJSON';
+import { v4 as uuidv4 } from 'uuid';
 //Material-UI
 import { ThemeProvider } from "@material-ui/styles";
 //Styles
@@ -18,12 +20,27 @@ function App() {
    * Initialize form
    * TODO: check local storige for existing one
    */
-  const [formBlockList, setFormBlockList] = useState<any[]>([]);
+  const [metaFormJson, setMetaFormJson] = useState<any>(MetaformJSON);
+
+  /**
+   * Generate unique id for the form
+   */
+  useEffect(() => {
+
+    const newFormJson = {...metaFormJson};
+
+    let newId = uuidv4();
+
+    newFormJson.id = newId;
+    
+    setMetaFormJson(newFormJson);
+
+  }, []);
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <HeaderNav setFormBlockList={setFormBlockList} formBlockList={formBlockList}/> 
+        <HeaderNav setMetaFormJson={setMetaFormJson} metaFormJson={metaFormJson}/> 
       </ThemeProvider>
     </Router>
   );

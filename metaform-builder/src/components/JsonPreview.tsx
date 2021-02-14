@@ -1,11 +1,12 @@
-import { Box, Typography } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
 import React, { useState } from 'react';
 import MetaformTypes from '../types/metaForm';
+//Material-UI
+import { Box, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 interface Props {
     json : MetaformTypes
-    formBlockList : MetaformTypes
+    metaFormJson : MetaformTypes
 }
 
 /**
@@ -14,14 +15,14 @@ interface Props {
  */
 const Preview : React.FC<any> = (props : Props) => {
 
-    const [metaformJson] = useState<MetaformTypes>(props.formBlockList)
+    const [metaformJson] = useState<MetaformTypes>(props.metaFormJson)
 
   return (
   <>
   <Grid container >
     <Grid item md={12}>
         <Typography variant="h4" >
-            Jsonin esikatselu, lataus ja mahdollinen käpistely(?)
+            Jsonin esikatselu
         </Typography> 
     </Grid>
     <Grid item md={3} >
@@ -30,7 +31,7 @@ const Preview : React.FC<any> = (props : Props) => {
     <Grid item md={6}>
         <Box>
             <pre style={{backgroundColor: '#eee'}}>
-                <h2>Metaform, lisätyt komponentit:</h2>
+                <h2>Metaform</h2>
                 <code>
                     {JSON.stringify(metaformJson, null, 2)}
                 </code>

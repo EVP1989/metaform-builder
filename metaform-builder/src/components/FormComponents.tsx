@@ -1,8 +1,8 @@
+import React, { useRef } from 'react';
+//Material-UI
 import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Delete } from '@material-ui/icons';
-import React, { useRef } from 'react';
-import '../styles/FormItems.css';
 
 //DnD items based on github repo: https://github.com/Gaurav2048/React-DnD-Adv
 
@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  setFormBlockList : (newFormBlockList : any[]) => void
-  formBlockList : any[],
+  setMetaFormJson : (newMetaFormJson : any) => void
+  metaFormJson : any,
 }
 
 /**
@@ -45,7 +45,8 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
   const handleDragEnter = (e : any, position : number) => {
       dragOverItem.current = position;
-      const newFormBlockList = [...props.formBlockList];
+      const newFormJson = {...props.metaFormJson};
+      const newFormBlockList = [...newFormJson.sections[0].fields];
       if(draggingItem.current != null) {
           const draggingItemContent = newFormBlockList[draggingItem.current];
           newFormBlockList.splice(draggingItem.current, 1);
@@ -53,24 +54,29 @@ const FormComponents : React.FC<any> = (props : Props) => {
       }
       draggingItem.current = dragOverItem.current;
       dragOverItem.current = null;
-      props.setFormBlockList(newFormBlockList);
+      newFormJson.sections[0].fields = newFormBlockList;
+      props.setMetaFormJson(newFormJson);
   };
 
-  /**
-   * Updates form input data (TESTING)
+/**
+   * Updates form input data
    * 
    * @param input 
-   * @param index 
-   */
+   * @param index   
+*/   
   const handleInputChange = (input : any, index : number) => {
 
       let title  = input.target.value;
 
-      const newFormBlockList = Array.from(props.formBlockList);
+      const newFormJson = {...props.metaFormJson};
+
+      const newFormBlockList = [...newFormJson.sections[0].fields];
 
       newFormBlockList[index].title = title;
 
-      props.setFormBlockList(newFormBlockList);
+      newFormJson.sections[0].fields = newFormBlockList;
+
+      props.setMetaFormJson(newFormJson);
   }
 
   /**
@@ -79,11 +85,15 @@ const FormComponents : React.FC<any> = (props : Props) => {
    */
   const deleteFormComponent = (index : number) : void => {
 
-    const newFormBlockList = [...props.formBlockList];
+    const newFormJson = {...props.metaFormJson};
+
+    const newFormBlockList = [...newFormJson.sections[0].fields];
 
     newFormBlockList.splice(index,1);
 
-    props.setFormBlockList(newFormBlockList);
+    newFormJson.sections[0].fields = newFormBlockList;
+
+    props.setMetaFormJson(newFormJson);
 
   }
 
@@ -95,7 +105,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
       Uusi Lomake
     </Typography>
     <List className={classes.root}>
-        {props.formBlockList.map((item : any, index : number) => (
+        {props.metaFormJson.sections[0].fields.map((item : any, index : number) => (
         <ListItem
           onDragStart={(e) => handleDragStart(e, index)}
           onDragEnter={(e) => handleDragEnter(e, index)}
