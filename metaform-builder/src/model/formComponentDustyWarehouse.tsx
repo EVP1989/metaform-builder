@@ -24,7 +24,7 @@ const addableComponents : AddableComponents[] = [
         "step": null,
         "checked": null,
         "printable": null,
-        "options": [],
+        "options": null,
         "sourceUrl": null,
         "uploadUrl": null,
         "singleFile": null,
@@ -56,7 +56,7 @@ const addableComponents : AddableComponents[] = [
         "step": null,
         "checked": null,
         "printable": null,
-        "options": [],
+        "options": null,
         "sourceUrl": null,
         "uploadUrl": null,
         "singleFile": null,
@@ -69,7 +69,39 @@ const addableComponents : AddableComponents[] = [
         "text": null,
         "html": null
       },
-
+      {
+        "visibleIf": null,
+        "permissionContexts": null,
+        "name": "status",
+        "type": "radio",
+        "title": "Valintanappula",//Tila
+        "required": null,
+        "contexts": [
+          "MANAGEMENT_LIST",
+          "MANAGEMENT"
+        ],
+        "flags": {
+          "managementEditable": true
+        },
+        "placeholder": null,
+        "_class": null,
+        "readonly": null,
+        "help": null,
+        "_default": null,
+        "min": null,
+        "max": null,
+        "step": null,
+        "checked": null,
+        "printable": null,
+        "options": [
+          {
+            "name": null,
+            "text": null,
+            "checked": true,
+            "selected": null
+          }
+        ]
+      }
 ]
 
 export default addableComponents;

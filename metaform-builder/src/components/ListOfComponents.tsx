@@ -1,9 +1,18 @@
-import { Box, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import SubjectIcon from '@material-ui/icons/Subject';
 import React from 'react';
 import addableComponents from '../model/formComponentDustyWarehouse';
 import FormComponents from './FormComponents';
+//Material-UI
+import { Box, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import SubjectIcon from '@material-ui/icons/Subject';
+import TextFormatIcon from '@material-ui/icons/TextFormat';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import WebAssetIcon from '@material-ui/icons/WebAsset';
+import CreateIcon from '@material-ui/icons/Create';
+import LinkIcon from '@material-ui/icons/Link';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import ImageIcon from '@material-ui/icons/Image';
 
 //Styles
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
         
     },
     icon: {
-      margin: theme.spacing(1, 2, 1),
+      margin: theme.spacing(1, 1, 1),
     },
   }),
 );
@@ -54,26 +63,86 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
 
     }
 
+    /**
+     * Returns icon based on rendered addable form component
+     * @param title 
+     */
+    const renderIcon = (title : any) => {
+
+      if (title === "Osionpohja"){
+
+        return <ListItemIcon className={classes.icon}>
+                <WebAssetIcon />
+              </ListItemIcon>
+      }
+      if(title === "Otsikko"){
+
+        return <ListItemIcon className={classes.icon}>
+                <TextFormatIcon/>
+              </ListItemIcon>
+      } 
+      if (title === "Tekstikenttä"){
+
+        return <ListItemIcon className={classes.icon}>
+                <SubjectIcon />
+              </ListItemIcon>
+      }
+      if (title === "Valintanappula"){
+
+        return <ListItemIcon className={classes.icon}>
+                <RadioButtonCheckedIcon />
+              </ListItemIcon>
+      }
+      if (title === "Muokattavateksti"){
+
+        return <ListItemIcon className={classes.icon}>
+                <CreateIcon />
+              </ListItemIcon>
+      }
+      if (title === "Ehdollinenkenttä"){
+
+        return <ListItemIcon className={classes.icon}>
+                <LinkIcon />
+              </ListItemIcon>
+      }
+      if (title === "Alasvetovalikko"){
+
+        return <ListItemIcon className={classes.icon}>
+                <ArrowDropDownIcon />
+              </ListItemIcon>
+      }
+      if (title === "Valintaruutu"){
+
+        return <ListItemIcon className={classes.icon}>
+                <CheckBoxIcon />
+              </ListItemIcon>
+      }
+      if (title === "Ehdollinenkenttä"){
+
+        return <ListItemIcon className={classes.icon}>
+                <ImageIcon />
+              </ListItemIcon>
+      }
+    }
+
   return (
   <>
   <Grid container>
     <Grid item md={3}>
       <List>
         <Typography variant="h5">
-          Komponentit
+          Palikat
         </Typography>
-        {addableComponentsList && addableComponentsList.map((component, index) => (
+        {addableComponentsList.map((component, index) => (
           <ListItem
             key={index} draggable
             className={classes.components}
             onClick={(e) => addFormComponentToList(component, index)}
             >
-            <Box border={1} display="flex" pr={3}>
-              <ListItemIcon className={classes.icon}>
-                <SubjectIcon />
-              </ListItemIcon>
+            <Box border={1} display="flex" alignItems="flex-start" width={4/4} pr={3}>
+              { renderIcon(component.title) }
               <ListItemText >
-                <Typography variant="h6" >
+                <Typography >
                   {component.title}
                 </Typography>
               </ListItemText>
