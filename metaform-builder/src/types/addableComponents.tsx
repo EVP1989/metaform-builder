@@ -5,7 +5,7 @@
 export interface AddableComponents {
         "visibleIf"?: null,
         "permissionContexts"?: null,
-        "name"?: string,
+        "name"?: string | null,
         "type"?: string | null,
         "title"?: string | null,
         "required"?: null,
@@ -28,7 +28,7 @@ export interface AddableComponents {
                 "checked"?: boolean | null,
                 "selected"?: boolean | null
                 }
-        ] | null,
+        ] | null | any,
         "sourceUrl"?: null,
         "uploadUrl"?: null,
         "singleFile"?: null,

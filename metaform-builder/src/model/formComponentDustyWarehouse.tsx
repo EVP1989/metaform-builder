@@ -8,13 +8,13 @@ const addableComponents : AddableComponents[] = [
     {
         "visibleIf": null,
         "permissionContexts": null,
-        "name": "html-field-1",
+        "name": null,
         "type": "html",
         "title": "Otsikko",
         "required": null,
         "contexts": [],
         "flags": null,
-        "placeholder": "Otsikko 1",
+        "placeholder": null,
         "_class": null,
         "readonly": null,
         "help": null,
@@ -35,18 +35,18 @@ const addableComponents : AddableComponents[] = [
         "columns": [],
         "src": null,
         "text": null,
-        "html": "<h3>Otsikko 1</h3>"
+        "html": null
       },
       {
         "visibleIf": null,
         "permissionContexts": null,
-        "name": "text-field-1",
+        "name": null,
         "type": "text",
         "title": "Tekstikenttä",
         "required": null,
         "contexts": [],
         "flags": null,
-        "placeholder": "Tekstikenttä 1",
+        "placeholder": null,
         "_class": null,
         "readonly": null,
         "help": null,
@@ -76,10 +76,7 @@ const addableComponents : AddableComponents[] = [
         "type": "radio",
         "title": "Valintanappula",//Tila
         "required": null,
-        "contexts": [
-          "MANAGEMENT_LIST",
-          "MANAGEMENT"
-        ],
+        "contexts": [],
         "flags": {
           "managementEditable": true
         },
@@ -101,7 +98,71 @@ const addableComponents : AddableComponents[] = [
             "selected": null
           }
         ]
-      }
+      },
+      {
+        "visibleIf": null,
+        "permissionContexts": null,
+        "name": null,
+        "type": "select",
+        "title": "Alasvetovalikko",
+        "required": null,
+        "contexts": [],
+        "flags": null,
+        "placeholder": null,
+        "_class": null,
+        "readonly": null,
+        "help": null,
+        "_default": null,
+        "min": null,
+        "max": null,
+        "step": null,
+        "checked": null,
+        "printable": null,
+        "options": [],
+        "sourceUrl": null,
+        "uploadUrl": null,
+        "singleFile": null,
+        "onlyImages": null,
+        "maxFileSize": null,
+        "addRows": null,
+        "draggable": null,
+        "columns": [],
+        "src": null,
+        "text": null,
+        "html": null
+      },
+      {
+        "visibleIf": null,
+        "permissionContexts": null,
+        "name": null,
+        "type": "checklist",
+        "title": "Valintaruutu",
+        "required": null,
+        "contexts": [],
+        "flags": null,
+        "placeholder": null,
+        "_class": null,
+        "readonly": null,
+        "help": null,
+        "_default": null,
+        "min": null,
+        "max": null,
+        "step": null,
+        "checked": null,
+        "printable": null,
+        "options": null,
+        "sourceUrl": null,
+        "uploadUrl": null,
+        "singleFile": null,
+        "onlyImages": null,
+        "maxFileSize": null,
+        "addRows": null,
+        "draggable": null,
+        "columns": [],
+        "src": null,
+        "text": null,
+        "html": null
+      },
 ]
 
 export default addableComponents;
