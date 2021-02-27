@@ -5,7 +5,7 @@ import "react-quill/dist/quill.core.css";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 //Material-UI
-import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
+import { Checkbox, createStyles, FormControl, InputLabel, List, ListItem, ListItemText, ListSubheader, makeStyles, MenuItem, Radio, Select, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Delete } from '@material-ui/icons';
 
@@ -39,8 +39,9 @@ interface Props {
  */
 const FormComponents : React.FC<any> = (props : Props) => {
 
-  //Guill configuration 
-  //TODO: customize for headers/paragraphs (separate modules?)
+  //Guill configuration for html options
+  //TODO: Customize for headers/paragraphs (separate modules?)
+  //TODO: Empty string should either delete component or cause warning. 
   const modules = {
     toolbar: [
       //[{ header: "1" }, { header: "4" }, { font: [] }],
@@ -58,7 +59,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
     ],
     clipboard: {
       // toggle to add extra line breaks when pasting HTML:
-      matchVisual: false
+      matchVisual: true
     }
   };
   //Guill formats
@@ -98,7 +99,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
   };
 
 /**
-   * Updates form input data
+   * Updates form components TITLE 
    * 
    * @param input 
    * @param index   
@@ -118,6 +119,10 @@ const FormComponents : React.FC<any> = (props : Props) => {
       props.setMetaFormJson(newFormJson);
   }
   
+  /**
+   * Updates metaforms main header (TITLE)
+   * @param input 
+   */
   const handleFormHeaderChange = (input : any) => {
 
     let title  = input.target.value;
@@ -127,7 +132,27 @@ const FormComponents : React.FC<any> = (props : Props) => {
     newFormJson.title = title;
 
     props.setMetaFormJson(newFormJson);
-}
+  }
+
+  /**
+   * Updates form component HTML data
+   * @param input 
+   * @param index 
+   */
+  const handleHtmlChange = (input : any, index : number) => {
+
+    let newHtml  = input;
+
+    const newFormJson = {...props.metaFormJson};
+
+    const newFormBlockList = [...newFormJson.sections[0].fields];
+
+    newFormBlockList[index].html = newHtml;
+
+    newFormJson.sections[0].fields = newFormBlockList;
+
+    props.setMetaFormJson(newFormJson);
+  }
 
 
   /**
@@ -148,6 +173,48 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
   }
 
+  /**
+   * Returns label for form component
+   * @param title 
+   */
+  const renderLabel = (title : string) => {
+
+    if (title === "Osionpohja"){
+
+      return "Osion pohja"
+    }
+    if(title === "Otsikko"){
+
+      return "Väliotsikko"
+    } 
+    if (title === "Tekstikenttä"){
+
+      return "Tekstikenttä"
+    }
+    if (title === "Valintanappula"){
+
+      return "Valintanappula"
+    }
+    if (title === "Muokattavateksti"){
+
+      return "Muokattava teksti"
+    }
+    if (title === "Ehdollinenkenttä"){
+
+      return "Ehdollinen kenttä"
+    }
+    if (title === "Alasvetovalikko"){
+
+      return "Alasvetovalikko"
+    }
+    if (title === "Valintaruutu"){
+
+      return "Valintaruutu"
+    }
+  }
+
+
+
   //TODO: Use methods to return needed elements
   return (
   <>
@@ -164,13 +231,54 @@ const FormComponents : React.FC<any> = (props : Props) => {
           key={index} draggable
           className={classes.components}
           >
-          <ListItemText>
-          <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
-            {item.html ?
-            <ReactQuill value={item.html} modules={modules} formats={formats} onChange={(input) => console.log(input) }/>
-            :
-            <TextField variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
-            }
+          <ListItemText >
+            <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
+              {item.type === "html" ?
+              <ReactQuill value={item.html} modules={modules} formats={formats} onChange={(input) => handleHtmlChange(input, index) }/>
+              :
+              ""
+              }
+              {item.type === "text" ?
+              <TextField label={ renderLabel(item.title) } variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+              :
+              ""
+              }
+              {item.type === "radio" ?
+              <Radio value="Test"/>
+              :
+              ""
+              }
+              {item.type === "boolean" ?
+              <TextField label={ renderLabel(item.title) } variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+              :
+              ""
+              }
+              {item.type === "select" ?
+              <FormControl >
+              <InputLabel>Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value="Testi"
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+              :
+              ""
+              }
+              {item.type === "memo" ?
+              <TextField label={ renderLabel(item.title) } variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+              :
+              ""
+              }
+              {item.type === "checklist" ?
+              <Checkbox></Checkbox>
+              :
+              ""
+              }
           </ListItemText>
         </ListItem>
         ))}
