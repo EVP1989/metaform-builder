@@ -29,7 +29,7 @@ interface Props {
 }
 
 /**
- * Renders form according to given component list
+ * Renders form according to given json
  * @param props 
  */
 const FormComponents : React.FC<any> = (props : Props) => {
@@ -78,6 +78,18 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
       props.setMetaFormJson(newFormJson);
   }
+  
+  const handleFormHeaderChange = (input : any) => {
+
+    let title  = input.target.value;
+
+    const newFormJson = {...props.metaFormJson};
+
+    newFormJson.title = title;
+
+    props.setMetaFormJson(newFormJson);
+}
+
 
   /**
    * Deletes form component from list
@@ -101,8 +113,8 @@ const FormComponents : React.FC<any> = (props : Props) => {
   return (
   <>
   <Grid item md={12}>
-    <Typography variant="h2" >
-      Uusi Lomake
+    <Typography variant="h3" >
+      <TextField label="Lomakkeen pääotsikko" variant="outlined" value={props.metaFormJson.title} onChange={(input) => handleFormHeaderChange(input) }/>
     </Typography>
     <List className={classes.root}>
         {props.metaFormJson.sections[0].fields.map((item : any, index : number) => (
