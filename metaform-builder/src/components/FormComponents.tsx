@@ -1,4 +1,9 @@
 import React, { useRef } from 'react';
+//React-Quill
+import ReactQuill from 'react-quill';
+import "react-quill/dist/quill.core.css";
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
 //Material-UI
 import { createStyles, List, ListItem, ListItemText, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -33,6 +38,40 @@ interface Props {
  * @param props 
  */
 const FormComponents : React.FC<any> = (props : Props) => {
+
+  //Guill configuration 
+  //TODO: customize for headers/paragraphs (separate modules?)
+  const modules = {
+    toolbar: [
+      //[{ header: "1" }, { header: "4" }, { font: [] }],
+      //[{ size: [] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      /*[
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" }
+      ],*/
+      //["link", "image", "video"],
+      //["clean"]
+    ],
+    clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
+      matchVisual: false
+    }
+  };
+  //Guill formats
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+  ];
 
   const classes = useStyles();
 
@@ -127,7 +166,11 @@ const FormComponents : React.FC<any> = (props : Props) => {
           >
           <ListItemText>
           <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
+            {item.html ?
+            <ReactQuill value={item.html} modules={modules} formats={formats} onChange={(input) => console.log(input) }/>
+            :
             <TextField variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+            }
           </ListItemText>
         </ListItem>
         ))}

@@ -35,7 +35,7 @@ const addableComponents : AddableComponents[] = [
         "columns": [],
         "src": null,
         "text": null,
-        "html": null
+        "html": "<h1>Väliotsikko</h1>"
       },
       {
         "visibleIf": null,
