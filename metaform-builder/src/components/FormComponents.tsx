@@ -5,7 +5,7 @@ import "react-quill/dist/quill.core.css";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 //Material-UI
-import { Checkbox, createStyles, FormControl, InputLabel, List, ListItem, ListItemText, ListSubheader, makeStyles, MenuItem, Radio, Select, TextField, Theme, Typography } from '@material-ui/core';
+import { Checkbox, createStyles, FormControl, InputLabel, List, ListItem, ListItemText, makeStyles, MenuItem, Radio, Select, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Delete } from '@material-ui/icons';
 
@@ -19,11 +19,15 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 250,
     },
     components: {
-      backgroundColor: theme.palette.background.default,
-        
+      backgroundColor: theme.palette.background.default, 
     },
     icon: {
       margin: theme.spacing(1, 2, 1),
+    },
+    gridItem: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      backgroundColor: theme.palette.background.paper
     },
   }),
 );
@@ -213,16 +217,14 @@ const FormComponents : React.FC<any> = (props : Props) => {
     }
   }
 
-
-
-  //TODO: Use methods to return needed elements
+  //TODO: Quill elements acting weird when drag&drop, resolve.
   return (
   <>
-  <Grid item md={12}>
+  <Grid item md={12} className={classes.gridItem}>
     <Typography variant="h3" >
-      <TextField label="Lomakkeen pääotsikko" variant="outlined" value={props.metaFormJson.title} onChange={(input) => handleFormHeaderChange(input) }/>
+      <TextField fullWidth label="Lomakkeen pääotsikko" variant="outlined"  value={props.metaFormJson.title} onChange={(input) => handleFormHeaderChange(input) }/>
     </Typography>
-    <List className={classes.root}>
+    <List className={classes.gridItem}>
         {props.metaFormJson.sections[0].fields.map((item : any, index : number) => (
         <ListItem
           onDragStart={(e) => handleDragStart(e, index)}
@@ -231,7 +233,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
           key={index} draggable
           className={classes.components}
           >
-          <ListItemText >
+          <ListItemText>
             <Delete color="primary" onClick={(e) => deleteFormComponent(index)}/>
               {item.type === "html" ?
               <ReactQuill value={item.html} modules={modules} formats={formats} onChange={(input) => handleHtmlChange(input, index) }/>
