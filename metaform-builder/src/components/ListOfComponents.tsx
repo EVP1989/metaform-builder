@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       margin: theme.spacing(1, 1, 1),
     },
+    grid: {
+      paddingTop: theme.spacing(3),
+      textAlign: 'center',
+    },
+    gridItem: {
+      padding: theme.spacing(2),
+    },
   }),
 );
 
@@ -131,8 +138,8 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
 
   return (
   <>
-  <Grid container>
-    <Grid item md={3}>
+  <Grid container spacing={2} className={classes.grid}>
+    <Grid item xs={3}>
       <List>
         <Typography variant="h5">
           Palikat
@@ -155,8 +162,11 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
         ))}
       </List> 
     </Grid>
-    <Grid item md={9}>
+    <Grid item xs={6} >
       <FormComponents metaFormJson={props.metaFormJson} setMetaFormJson={props.setMetaFormJson}/>
+    </Grid>
+    <Grid item xs={3}>
+      Linkit
     </Grid>
   </Grid>
   </>
