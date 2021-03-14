@@ -5,7 +5,7 @@ const MetaformJSON = {
     "exportThemeId": null,
     "allowAnonymous": true,
     "allowDrafts": null,
-    "title": "Lomake!",
+    "title": "Uusi lomake!",
     "sections": [
       {
         "title": null,

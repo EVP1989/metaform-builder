@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       margin: theme.spacing(1, 1, 1),
     },
+    grid: {
+      paddingTop: theme.spacing(0),
+      textAlign: 'center',
+    },
+    gridItem: {
+      padding: theme.spacing(1),
+    },
   }),
 );
 
@@ -69,59 +76,59 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
 
     /**
      * Returns icon based on rendered addable form component
-     * @param title 
+     * @param type 
      */
-    const renderIcon = (title : any) => {
+    const renderIcon = (type : any, html? : string | null) => {
 
-      if (title === "Osionpohja"){
+      if (type === "test"){
 
         return <ListItemIcon className={classes.icon}>
                 <WebAssetIcon />
               </ListItemIcon>
       }
-      if(title === "Otsikko"){
+      if(type === "html" && html === "<h1>Väliotsikko</h1>"){
 
         return <ListItemIcon className={classes.icon}>
                 <TextFormatIcon/>
               </ListItemIcon>
       } 
-      if (title === "Tekstikenttä"){
+      if (type === "html" && html === "<p>Tekstikenttä</p>"){
 
         return <ListItemIcon className={classes.icon}>
                 <SubjectIcon />
               </ListItemIcon>
       }
-      if (title === "Valintanappula"){
+      if (type === "radio"){
 
         return <ListItemIcon className={classes.icon}>
                 <RadioButtonCheckedIcon />
               </ListItemIcon>
       }
-      if (title === "Muokattavateksti"){
+      if (type === "text"){
 
         return <ListItemIcon className={classes.icon}>
                 <CreateIcon />
               </ListItemIcon>
       }
-      if (title === "Ehdollinenkenttä"){
+      if (type === "test"){
 
         return <ListItemIcon className={classes.icon}>
                 <LinkIcon />
               </ListItemIcon>
       }
-      if (title === "Alasvetovalikko"){
+      if (type === "select"){
 
         return <ListItemIcon className={classes.icon}>
                 <ArrowDropDownIcon />
               </ListItemIcon>
       }
-      if (title === "Valintaruutu"){
+      if (type === "checklist"){
 
         return <ListItemIcon className={classes.icon}>
                 <CheckBoxIcon />
               </ListItemIcon>
       }
-      if (title === "Ehdollinenkenttä"){
+      if (type === "boolean"){
 
         return <ListItemIcon className={classes.icon}>
                 <ImageIcon />
@@ -131,8 +138,8 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
 
   return (
   <>
-  <Grid container>
-    <Grid item md={3}>
+  <Grid container spacing={2} className={classes.grid}>
+    <Grid item xs={3}>
       <List>
         <Typography variant="h5">
           Palikat
@@ -144,7 +151,7 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
             onClick={(e) => addFormComponentToList(component, index)}
             >
             <Box border={1} display="flex" alignItems="flex-start" width={4/4} pr={3}>
-              { renderIcon(component.title) }
+              { renderIcon(component.type, component.html) }
               <ListItemText >
                 <Typography >
                   {component.title}
@@ -155,8 +162,11 @@ const ListOfComponents : React.FC<any> = (props : Props) => {
         ))}
       </List> 
     </Grid>
-    <Grid item md={9}>
+    <Grid item xs={6} >
       <FormComponents metaFormJson={props.metaFormJson} setMetaFormJson={props.setMetaFormJson}/>
+    </Grid>
+    <Grid item xs={3}>
+      Linkit
     </Grid>
   </Grid>
   </>
