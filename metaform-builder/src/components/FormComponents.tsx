@@ -8,6 +8,8 @@ import "react-quill/dist/quill.bubble.css";
 import { Checkbox, createStyles, FormControl, InputLabel, List, ListItem, ListItemText, makeStyles, MenuItem, Radio, Select, TextField, Theme, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Delete } from '@material-ui/icons';
+//Html Parser
+import { parse } from 'node-html-parser';
 
 //DnD items based on github repo: https://github.com/Gaurav2048/React-DnD-Adv
 
@@ -36,6 +38,9 @@ interface Props {
   setMetaFormJson : (newMetaFormJson : any) => void
   metaFormJson : any,
 }
+
+//Slugify
+let slugify = require('slugify')
 
 /**
  * Renders form according to given json
@@ -102,16 +107,36 @@ const FormComponents : React.FC<any> = (props : Props) => {
       props.setMetaFormJson(newFormJson);
   };
 
-/**
+  const createSlugifiedName = (content : string) => {
+
+    let slugifiedContent = "";
+
+    if(typeof content === "string") {
+
+      content = content.toString();
+
+      slugifiedContent = slugify(content);
+
+    } else {
+
+      slugifiedContent = "error";
+
+    }
+
+    return slugifiedContent;
+
+  }
+
+  /**
    * Updates form components TITLE 
    * 
    * @param input 
    * @param index   
-*/   
+  */   
   const handleInputChange = (input : any, index : number) => {
 
       let title  = input.target.value;
-
+      
       const newFormJson = {...props.metaFormJson};
 
       const newFormBlockList = [...newFormJson.sections[0].fields];
@@ -147,11 +172,18 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
     let newHtml  = input;
 
+    //parses html tagged content to be slugified
+    let parsedHtml = parse(newHtml);
+
+    let newName = createSlugifiedName(parsedHtml.rawText.toLowerCase());
+
     const newFormJson = {...props.metaFormJson};
 
     const newFormBlockList = [...newFormJson.sections[0].fields];
 
     newFormBlockList[index].html = newHtml;
+
+    newFormBlockList[index].name = newName;
 
     newFormJson.sections[0].fields = newFormBlockList;
 
