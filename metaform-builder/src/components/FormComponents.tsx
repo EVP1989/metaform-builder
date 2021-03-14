@@ -107,24 +107,19 @@ const FormComponents : React.FC<any> = (props : Props) => {
       props.setMetaFormJson(newFormJson);
   };
 
+  /**
+   * Creates slugified string to be used as name
+   * @param content 
+   */
   const createSlugifiedName = (content : string) => {
 
     let slugifiedContent = "";
 
-    if(typeof content === "string") {
+    content = content.toString();
 
-      content = content.toString();
+    slugifiedContent = slugify(content);
 
-      slugifiedContent = slugify(content);
-
-    } else {
-
-      slugifiedContent = "error";
-
-    }
-
-    return slugifiedContent;
-
+    return slugifiedContent.slice(0,21);
   }
 
   /**
@@ -136,6 +131,8 @@ const FormComponents : React.FC<any> = (props : Props) => {
   const handleInputChange = (input : any, index : number) => {
 
       let title  = input.target.value;
+
+      let newName = createSlugifiedName(title.toLowerCase());
       
       const newFormJson = {...props.metaFormJson};
 
@@ -143,10 +140,54 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
       newFormBlockList[index].title = title;
 
+      newFormBlockList[index].name = newName;
+
       newFormJson.sections[0].fields = newFormBlockList;
 
       props.setMetaFormJson(newFormJson);
   }
+
+  /**
+   * Updates form components PLACEHOLDER
+   * 
+   * @param input 
+   * @param index   
+  */   
+ const handlePlaceholderChange = (input : any, index : number) => {
+
+  let placeholder  = input.target.value;
+  
+  const newFormJson = {...props.metaFormJson};
+
+  const newFormBlockList = [...newFormJson.sections[0].fields];
+
+  newFormBlockList[index].placeholder = placeholder;
+
+  newFormJson.sections[0].fields = newFormBlockList;
+
+  props.setMetaFormJson(newFormJson);
+}
+
+/**
+   * Updates form components NAME 
+   * 
+   * @param input 
+   * @param index   
+  */   
+ const handleNameChange = (input : any, index : number) => {
+
+  let name  = input.target.value;
+  
+  const newFormJson = {...props.metaFormJson};
+
+  const newFormBlockList = [...newFormJson.sections[0].fields];
+
+  newFormBlockList[index].name = name;
+
+  newFormJson.sections[0].fields = newFormBlockList;
+
+  props.setMetaFormJson(newFormJson);
+}
   
   /**
    * Updates metaforms main header (TITLE)
@@ -209,46 +250,6 @@ const FormComponents : React.FC<any> = (props : Props) => {
 
   }
 
-  /**
-   * Returns label for form component
-   * @param title 
-   */
-  const renderLabel = (title : string) => {
-
-    if (title === "Osionpohja"){
-
-      return "Osion pohja"
-    }
-    if(title === "Otsikko"){
-
-      return "Väliotsikko"
-    } 
-    if (title === "Tekstikenttä"){
-
-      return "Tekstikenttä"
-    }
-    if (title === "Valintanappula"){
-
-      return "Valintanappula"
-    }
-    if (title === "Muokattavateksti"){
-
-      return "Muokattava teksti"
-    }
-    if (title === "Ehdollinenkenttä"){
-
-      return "Ehdollinen kenttä"
-    }
-    if (title === "Alasvetovalikko"){
-
-      return "Alasvetovalikko"
-    }
-    if (title === "Valintaruutu"){
-
-      return "Valintaruutu"
-    }
-  }
-
   //TODO: Quill elements acting weird when drag&drop, resolve.
   return (
   <>
@@ -262,7 +263,8 @@ const FormComponents : React.FC<any> = (props : Props) => {
           onDragStart={(e) => handleDragStart(e, index)}
           onDragEnter={(e) => handleDragEnter(e, index)}
           onDragOver={(e) => e.preventDefault()}
-          key={index} draggable
+          key={index} 
+          draggable
           className={classes.components}
           >
           <ListItemText>
@@ -273,7 +275,12 @@ const FormComponents : React.FC<any> = (props : Props) => {
               ""
               }
               {item.type === "text" ?
-              <TextField label={ renderLabel(item.title) } variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+              <FormControl >
+                <h6>Testi input field</h6>
+                <TextField label="placeholder" variant="outlined" placeholder={item.placeholder} onChange={(input) => handlePlaceholderChange(input, index) }/>
+                <TextField label="title" variant="outlined" placeholder="Otsikko" onChange={(input) => handleInputChange(input, index) }/>
+                <TextField label="name" variant="outlined" placeholder="Esim. info-1" onChange={(input) => handleNameChange(input, index) }/>
+              </FormControl>
               :
               ""
               }
@@ -283,17 +290,17 @@ const FormComponents : React.FC<any> = (props : Props) => {
               ""
               }
               {item.type === "boolean" ?
-              <TextField label={ renderLabel(item.title) } variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+              <p>Boolean</p>
               :
               ""
               }
               {item.type === "select" ?
               <FormControl >
-              <InputLabel>Age</InputLabel>
+              <InputLabel>Testi</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value="Testi"
+                value="10"
               >
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
@@ -304,7 +311,7 @@ const FormComponents : React.FC<any> = (props : Props) => {
               ""
               }
               {item.type === "memo" ?
-              <TextField label={ renderLabel(item.title) } variant="outlined" value={item.title} onChange={(input) => handleInputChange(input, index) }/>
+              <p>memo</p>
               :
               ""
               }

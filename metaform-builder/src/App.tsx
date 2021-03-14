@@ -8,6 +8,7 @@ import { ThemeProvider } from "@material-ui/styles";
 //Styles
 import metaFormBuilder from "./styles/theme";
 import { responsiveFontSizes } from '@material-ui/core';
+import Metaform from './types/metaForm';
 
 /**
  * Material UI's automated responsive font sizes
@@ -18,7 +19,8 @@ function App() {
 
   /**
    * Initialize form
-   * TODO: check local storige for existing one
+   * TODO: create local storage
+   * TODO: check local storage for existing one
    */
   const [metaFormJson, setMetaFormJson] = useState<any>(MetaformJSON);
 

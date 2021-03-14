@@ -5,7 +5,7 @@
 export interface AddableComponents {
         "visibleIf"?: null,
         "permissionContexts"?: null,
-        "name": string | null,
+        "name"?: string | null,
         "type"?: string | null,
         "title"?: string | null,
         "required"?: null,
